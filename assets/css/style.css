@@ -20,13 +20,12 @@
     align-items: center;
 }
 
-
-
-
-    
+   
 .five-day {
     border: red solid 2px;
     width: 80%;
 }
    
-
+p {
+    font-size: 16px;
+}
