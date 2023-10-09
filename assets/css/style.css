@@ -7,12 +7,11 @@
     background-color: navy;
     color: white;
     width: 100vw;
-    border: red solid 2px;
+   
     padding: 5px;
 }
 .container1 {
     display: flex;
-    border: red solid 1px;
     width: 75%;
     height: auto;
     margin: 4px;
@@ -22,10 +21,18 @@
 
    
 .five-day {
-    border: red solid 2px;
     width: 80%;
 }
    
 p {
     font-size: 16px;
+}
+
+.card-body {
+    background-color: navy;
+    color: white;
+}
+
+#five-day-title {
+    text-align: center;
 }
