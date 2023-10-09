@@ -4,7 +4,7 @@ var currWeatherEl = document.querySelector('#current-weather');
 var fiveDayEl = document.querySelector('.five-day');
 var searchBtnEl = document.querySelector('.btn');
 
-// Cedar Park
+// austin
 var lat = 30.266666;
 var lon = -97.733330;
 var apiKey = 'b25ce75b259c4e61caf9ce00a1f90876';
@@ -34,21 +34,16 @@ function searchApi (query) {
     wxQueryUrl = wxQueryUrl.replace('{lat}', lat);
     wxQueryUrl = wxQueryUrl.replace('{lon}', lon);
     wxQueryUrl = wxQueryUrl + apiKey;
-    console.log(wxQueryUrl);
 
     fetch(wxQueryUrl)
         .then (function (response) {
-
-            if (!response.ok) {
-                throw response.json();
-            } else {
-
+            if (response.ok) {
             return response.json();
-        }
-    })
+          } else {
+            throw new Error('NETWORK RESPONSE ERROR');
+          }
+        })
         .then(function (data) {
-            currWeatherEl.textContent = data.search.query;
-
             console.log(data);
 
             if (!data.results.length) {
@@ -64,9 +59,7 @@ function searchApi (query) {
         .catch(function (error) {
             //  console.error(error);
         });
-        
 }
-
 
 
 
