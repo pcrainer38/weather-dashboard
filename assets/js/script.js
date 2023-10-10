@@ -9,11 +9,6 @@ var lat = 30.266666;
 var lon = -97.733330;
 var apiKey = 'b25ce75b259c4e61caf9ce00a1f90876';
 
-function displayDate() {
-    var today = dayjs().format('MMMM D, YYYY');
-    // dateDisplayEl.text(today);
-    console.log(today);
-}
 
 
 function handleSearchFormSubmit(event) {
@@ -45,7 +40,25 @@ function searchApi (query) {
         })
         .then(function (data) {
             console.log(data);
+           var cityName = data.city.name;
+           console.log(cityName);
 
+           var temperature = data.list[0].main.temp; 
+           temperature = Math.floor((temperature - 273) * 1.8 + 32);
+            console.log(temperature);
+
+            // var wind = data.list[0].main.wind.speed;
+            // console.log(wind);
+
+            var humidity = data.list[0].main.humidity;
+            console.log(humidity);
+
+            var today = dayjs().format('MMMM D, YYYY');
+
+
+            displayCurrentWeather(cityName, today, temperature);
+           
+            
             if (!data.results.length) {
                 console.log('No results found!');
                 currWeatherEl.innerHTML = '<h3>No results found, search again!</h3>';
@@ -59,11 +72,37 @@ function searchApi (query) {
         .catch(function (error) {
             //  console.error(error);
         });
+
+}
+
+function displayCurrentWeather(city, date, temperature) {
+
+    
+    var card = document.createElement('div');
+    var cardBody = document.createElement('div');
+    var heading = document.createElement('h2');
+    var forecast = document.createElement('div');
+    // var weatherIcon = document.createElement('img');
+    // var iconurl = 'https://openweathermap.org/img/w/${weather.weather[0].icon}.png'
+    // weatherIcon.setAttribute('src', iconurl);
+    card.setAttribute('class', 'card');
+    cardBody.setAttribute('class', 'card-body');
+    card.append(cardBody);
+    heading.setAttribute('class', 'h2 card-title');
+    heading.textContent = `${city} (${date})`;
+    // heading.append(weatherIcon);
+    cardBody.append(heading, temperature);
+    currWeatherEl.innerHTML = '';
+    currWeatherEl.append(card);
+
+    forecast
+    
+
+
 }
 
 
 
 searchBtnEl.addEventListener('click', handleSearchFormSubmit);
-displayDate();
 
 
