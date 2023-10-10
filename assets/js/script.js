@@ -9,7 +9,7 @@ var lat = 30.266666;
 var lon = -97.733330;
 var apiKey = 'b25ce75b259c4e61caf9ce00a1f90876';
 
-
+searchBtnEl.addEventListener('click', handleSearchFormSubmit);
 
 function handleSearchFormSubmit(event) {
     var searchInputVal = document.querySelector('.input-group').value;
@@ -24,7 +24,8 @@ function handleSearchFormSubmit(event) {
     searchApi(searchInputVal);
 }
 
- 
+
+
 function searchApi (query) {
     var wxQueryUrl = `https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid=`;
     wxQueryUrl = wxQueryUrl.replace('{lat}', lat);
@@ -62,10 +63,20 @@ function searchApi (query) {
             displayCurrentWeather(cityName, today, temperature);
 
             // 5 day forecast
-            var temp = data.list[2].main.temp;
+            var days = [4, 12, 20, 28, 36]
+
+            for (var i = 0; i < days.length; i++) {
+
+            var temp = data.list[i].main.temp;
             temp = Math.floor((temp - 273) * 1.8 + 32);
             console.log(temp);
            
+            var fiveDayWind = data.list[i].wind.speed;
+            console.log(fiveDayWind);
+
+            var fiveDayHumidity = data.list[i].main.humidity;
+            console.log(fiveDayHumidity);
+        }
 
             if (!data.results.length) {
                 console.log('No results found!');
@@ -85,7 +96,6 @@ function searchApi (query) {
 
 function displayCurrentWeather(city, date, temperature) {
 
-    
     var card = document.createElement('div');
     var cardBody = document.createElement('div');
     var heading = document.createElement('h2');
@@ -106,6 +116,8 @@ function displayCurrentWeather(city, date, temperature) {
 
 
 
-searchBtnEl.addEventListener('click', handleSearchFormSubmit);
+
+
+
 
 
