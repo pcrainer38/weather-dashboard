@@ -21,10 +21,37 @@ function handleSearchFormSubmit(event) {
         console.log('Great choice!');
     }
 
-    searchApi(searchInputVal);
+    searchCity(searchInputVal);
 }
 
+// Gets latitude and longitude of city entered in webpage
+function searchCity(query) {
+  
+    var cityEl = document.querySelector('#location').value;
+    console.log(cityEl);
 
+    fetch("https://geocode.maps.co/search?q=" + cityEl)
+    .then (function (response) {
+        if(response.ok) {
+            return response.json();
+        } else {
+            throw new Error('NETWORK RESPONSE ERROR');
+        }
+    })
+    .then(function(data) {
+        console.log(data);
+        var latitude = data[0].lat;
+        var longitude = data[0].lon;
+        console.log(latitude);
+        console.log(longitude);
+        
+    })
+    .catch(function (error) {
+        //  console.error(error);
+    });
+
+    searchApi();
+}
 
 function searchApi (query) {
     var wxQueryUrl = `https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid=`;
@@ -67,15 +94,18 @@ function searchApi (query) {
 
             for (var i = 0; i < days.length; i++) {
 
-            var temp = data.list[i].main.temp;
-            temp = Math.floor((temp - 273) * 1.8 + 32);
-            console.log(temp);
-           
-            var fiveDayWind = data.list[i].wind.speed;
-            console.log(fiveDayWind);
+                var dayOfWeek = data.list[i].dt_txt;
+                console.log(dayOfWeek);
 
-            var fiveDayHumidity = data.list[i].main.humidity;
-            console.log(fiveDayHumidity);
+                var temp = data.list[i].main.temp;
+                temp = Math.floor((temp - 273) * 1.8 + 32);
+                console.log(temp);
+            
+                var fiveDayWind = data.list[i].wind.speed;
+                console.log(fiveDayWind);
+
+                var fiveDayHumidity = data.list[i].main.humidity;
+                console.log(fiveDayHumidity);
         }
 
             if (!data.results.length) {
@@ -114,7 +144,10 @@ function displayCurrentWeather(city, date, temperature) {
     currWeatherEl.append(card);
 }
 
+function displayFiveDay() {
 
+
+}
 
 
 
