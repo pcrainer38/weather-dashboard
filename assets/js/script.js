@@ -24,6 +24,7 @@ function handleSearchFormSubmit(event) {
     searchApi(searchInputVal);
 }
 
+ 
 function searchApi (query) {
     var wxQueryUrl = `https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid=`;
     wxQueryUrl = wxQueryUrl.replace('{lat}', lat);
@@ -40,25 +41,32 @@ function searchApi (query) {
         })
         .then(function (data) {
             console.log(data);
+
+            // City and date
            var cityName = data.city.name;
            console.log(cityName);
 
+           var today = dayjs().format('MMMM D, YYYY');
+
+           // Current temperature, wind, humidity
            var temperature = data.list[0].main.temp; 
-           temperature = Math.floor((temperature - 273) * 1.8 + 32);
+            temperature = Math.floor((temperature - 273) * 1.8 + 32);
             console.log(temperature);
 
-            // var wind = data.list[0].main.wind.speed;
-            // console.log(wind);
+            var wind = data.list[0].wind.speed;
+            console.log(wind);
 
             var humidity = data.list[0].main.humidity;
             console.log(humidity);
 
-            var today = dayjs().format('MMMM D, YYYY');
-
-
             displayCurrentWeather(cityName, today, temperature);
+
+            // 5 day forecast
+            var temp = data.list[2].main.temp;
+            temp = Math.floor((temp - 273) * 1.8 + 32);
+            console.log(temp);
            
-            
+
             if (!data.results.length) {
                 console.log('No results found!');
                 currWeatherEl.innerHTML = '<h3>No results found, search again!</h3>';
@@ -94,11 +102,6 @@ function displayCurrentWeather(city, date, temperature) {
     cardBody.append(heading, temperature);
     currWeatherEl.innerHTML = '';
     currWeatherEl.append(card);
-
-    forecast
-    
-
-
 }
 
 
