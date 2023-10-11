@@ -85,10 +85,10 @@ function searchApi (query) {
             displayCurrentWeather(cityName, today, temperature, wind, humidity);
             
             // 5 day forecast
-            var days = [3, 11, 20, 28, 36]
-            for (var i = 0; i < days.length; i++) {
+            
+            for (var i = 4; i < data.list.length; i=i+8 ) {
                 
-                var dayOfWeek = data.list[days[i]].dt_txt;
+                var dayOfWeek = data.list[i].dt_txt;
             
                 console.log(dayOfWeek);
 

@@ -21,7 +21,7 @@
 
    
 .five-day {
-    width: 80%;
+    flex-wrap: wrap;
 }
    
 p {
