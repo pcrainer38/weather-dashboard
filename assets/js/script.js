@@ -86,11 +86,10 @@ function searchApi (query) {
             
             // 5 day forecast
             
-            for (var i = 4; i < data.list.length; i=i+8 ) {
+            for (var i = 5; i < data.list.length; i=i+8 ) {
                 
                 var dayOfWeek = data.list[i].dt_txt;
             
-                console.log(dayOfWeek);
 
                 var fiveDayTemp = data.list[i].main.temp_max;
                 fiveDayTemp = Math.floor((fiveDayTemp - 273) * 1.8 + 32);
@@ -137,15 +136,12 @@ function displayCurrentWeather(city, date, temperature, wind, humidity) {
     humidityEl.setAttribute('class', 'card-content');
     humidityEl.textContent = `Humidity: ${humidity}%`;
     
-    // var weatherIcon = document.createElement('img');
-    // var iconurl = 'https://openweathermap.org/img/w/${weather.weather[0].icon}.png'
-    // weatherIcon.setAttribute('src', iconurl);
+
     card.setAttribute('class', 'card');
     cardBody.setAttribute('class', 'card-body');
     card.append(cardBody);
     heading.setAttribute('class', 'h2 card-title');
     heading.textContent = `${city}  (${date})`;
-    // heading.append(weatherIcon);
     cardBody.append(heading, temperatureEl, windEl, humidityEl);
     currWeatherEl.innerHTML = '';
     currWeatherEl.append(card);
@@ -178,6 +174,7 @@ function displayFiveDay (dayOfWeek, fiveDayTemp, fiveDayWind, fiveDayHumidity) {
     fiveDayHumidityEl.setAttribute('class', 'p miniCard-title');
     fiveDayHumidityEl.textContent = `Humidity: ${fiveDayHumidity}%`;
 
+    
     cardMiniBody.append(dayOfWeekEl, fiveDayTempEl, fiveDayWindEl, fiveDayHumidityEl);
 }
 
