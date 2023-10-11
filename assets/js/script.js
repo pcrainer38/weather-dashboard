@@ -163,6 +163,7 @@ function displayFiveDay (dayOfWeek) {
     dayOfWeekEl.textContent = `${dayOfWeek}`;
     cardMiniBody.append(dayOfWeekEl);
     
+    fiveDayEl.append(cardMini);
   
 }
 
