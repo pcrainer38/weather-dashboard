@@ -87,8 +87,9 @@ function searchApi (query) {
             // 5 day forecast
             var days = [3, 11, 20, 28, 36]
             for (var i = 0; i < days.length; i++) {
-
-                var dayOfWeek = data.list[i].dt_txt;
+                
+                var dayOfWeek = data.list[days[i]].dt_txt;
+                
                 console.log(dayOfWeek);
 
                 var fiveDayTemp = data.list[i].main.temp;
@@ -99,8 +100,8 @@ function searchApi (query) {
                 // console.log(fiveDayWind);
 
                 var fiveDayHumidity = data.list[i].main.humidity;
-                // console.log(fiveDayHumidity);
-                displayFiveDay(dayOfWeek);
+             // console.log(fiveDayHumidity);
+                displayFiveDay(dayOfWeek, fiveDayTemp, fiveDayWind, fiveDayHumidity);
         }
             
 
@@ -151,20 +152,33 @@ function displayCurrentWeather(city, date, temperature, wind, humidity) {
 
 }
 
-function displayFiveDay (dayOfWeek) {
+function displayFiveDay (dayOfWeek, fiveDayTemp, fiveDayWind, fiveDayHumidity) {
     var cardMini = document.createElement('div');
     var cardMiniBody = document.createElement('div');
     cardMini.setAttribute('class', 'card');
     cardMiniBody.setAttribute('class', 'card-body');
-    cardMini.append(fiveDayEl);
+    cardMini.append(cardMiniBody);
 
-    var dayOfWeekEl = document.createElement('h3');
-    dayOfWeekEl.setAttribute('class', 'h3 miniCard-title');
+    var dayOfWeekEl = document.createElement('p');
+    dayOfWeekEl.setAttribute('class', 'p miniCard-title');
     dayOfWeekEl.textContent = `${dayOfWeek}`;
-    cardMiniBody.append(dayOfWeekEl);
+    
     
     fiveDayEl.append(cardMini);
-  
+
+    var fiveDayTempEl = document.createElement('p');
+    fiveDayTempEl.setAttribute('class', 'p miniCard-title');
+    fiveDayTempEl.textContent = `Temp: ${fiveDayTemp} F`;
+    
+    var fiveDayWindEl = document.createElement('p');
+    fiveDayWindEl.setAttribute('class', 'p miniCard-title');
+    fiveDayWindEl.textContent = `Wind: ${fiveDayWind} mph`;
+
+    var fiveDayHumidityEl = document.createElement('p');
+    fiveDayHumidityEl.setAttribute('class', 'p miniCard-title');
+    fiveDayHumidityEl.textContent = `Humidity: ${fiveDayHumidity}%`;
+
+    cardMiniBody.append(dayOfWeekEl, fiveDayTempEl, fiveDayWindEl, fiveDayHumidityEl);
 }
 
 
