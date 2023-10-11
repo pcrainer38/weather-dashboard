@@ -83,7 +83,7 @@ function searchApi (query) {
             var humidity = data.list[0].main.humidity;
 
             displayCurrentWeather(cityName, today, temperature, wind, humidity);
-            displayFiveDay(dayOfWeek);
+            
             // 5 day forecast
             var days = [3, 11, 20, 28, 36]
             for (var i = 0; i < days.length; i++) {
@@ -100,6 +100,7 @@ function searchApi (query) {
 
                 var fiveDayHumidity = data.list[i].main.humidity;
                 // console.log(fiveDayHumidity);
+                displayFiveDay(dayOfWeek);
         }
             
 
@@ -150,12 +151,12 @@ function displayCurrentWeather(city, date, temperature, wind, humidity) {
 
 }
 
-function displayFiveDay () {
+function displayFiveDay (dayOfWeek) {
     var cardMini = document.createElement('div');
     var cardMiniBody = document.createElement('div');
     cardMini.setAttribute('class', 'card');
     cardMiniBody.setAttribute('class', 'card-body');
-    cardMini.append(cardMiniBody);
+    cardMini.append(fiveDayEl);
 
     var dayOfWeekEl = document.createElement('h3');
     dayOfWeekEl.setAttribute('class', 'h3 miniCard-title');
