@@ -73,7 +73,7 @@ function searchApi (query) {
            var cityName = data.city.name;
 
            var today = dayjs().format('MMMM D, YYYY');
-
+           
            // Current temperature, wind, humidity
            var temperature = data.list[0].main.temp; 
             temperature = Math.floor((temperature - 273) * 1.8 + 32);
@@ -89,10 +89,10 @@ function searchApi (query) {
             for (var i = 0; i < days.length; i++) {
                 
                 var dayOfWeek = data.list[days[i]].dt_txt;
-                
+            
                 console.log(dayOfWeek);
 
-                var fiveDayTemp = data.list[i].main.temp;
+                var fiveDayTemp = data.list[i].main.temp_max;
                 fiveDayTemp = Math.floor((fiveDayTemp - 273) * 1.8 + 32);
                 // console.log(fiveDayTemp);
             
