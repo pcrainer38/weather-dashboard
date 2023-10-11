@@ -4,9 +4,6 @@ var currWeatherEl = document.querySelector('#current-weather');
 var fiveDayEl = document.querySelector('.five-day');
 var searchBtnEl = document.querySelector('.btn');
 
-// austin
-var lat = 30.266666;
-var lon = -97.733330;
 var apiKey = 'b25ce75b259c4e61caf9ce00a1f90876';
 
 searchBtnEl.addEventListener('click', handleSearchFormSubmit);
@@ -28,7 +25,7 @@ function handleSearchFormSubmit(event) {
 function searchCity(query) {
   
     var cityEl = document.querySelector('#location').value;
-    console.log(cityEl);
+    // console.log(cityEl);
 
     fetch("https://geocode.maps.co/search?q=" + cityEl)
     .then (function (response) {
@@ -44,13 +41,15 @@ function searchCity(query) {
         var longitude = data[0].lon;
         console.log(latitude);
         console.log(longitude);
-        
+        lat = latitude;
+        lon = longitude;
+        searchApi();
+
     })
     .catch(function (error) {
         //  console.error(error);
     });
 
-    searchApi();
 }
 
 function searchApi (query) {
@@ -72,41 +71,37 @@ function searchApi (query) {
 
             // City and date
            var cityName = data.city.name;
-           console.log(cityName);
 
            var today = dayjs().format('MMMM D, YYYY');
 
            // Current temperature, wind, humidity
            var temperature = data.list[0].main.temp; 
             temperature = Math.floor((temperature - 273) * 1.8 + 32);
-            console.log(temperature);
-
+            
             var wind = data.list[0].wind.speed;
-            console.log(wind);
 
             var humidity = data.list[0].main.humidity;
-            console.log(humidity);
 
-            displayCurrentWeather(cityName, today, temperature);
-
+            displayCurrentWeather(cityName, today, temperature, wind, humidity);
+            displayFiveDay(dayOfWeek);
             // 5 day forecast
-            var days = [4, 12, 20, 28, 36]
-
+            var days = [3, 11, 20, 28, 36]
             for (var i = 0; i < days.length; i++) {
 
                 var dayOfWeek = data.list[i].dt_txt;
                 console.log(dayOfWeek);
 
-                var temp = data.list[i].main.temp;
-                temp = Math.floor((temp - 273) * 1.8 + 32);
-                console.log(temp);
+                var fiveDayTemp = data.list[i].main.temp;
+                fiveDayTemp = Math.floor((fiveDayTemp - 273) * 1.8 + 32);
+                // console.log(fiveDayTemp);
             
                 var fiveDayWind = data.list[i].wind.speed;
-                console.log(fiveDayWind);
+                // console.log(fiveDayWind);
 
                 var fiveDayHumidity = data.list[i].main.humidity;
-                console.log(fiveDayHumidity);
+                // console.log(fiveDayHumidity);
         }
+            
 
             if (!data.results.length) {
                 console.log('No results found!');
@@ -118,18 +113,28 @@ function searchApi (query) {
                 }
             }
         })
+
         .catch(function (error) {
-            //  console.error(error);
+        //  console.error(error);
         });
 
 }
 
-function displayCurrentWeather(city, date, temperature) {
+function displayCurrentWeather(city, date, temperature, wind, humidity) {
 
     var card = document.createElement('div');
     var cardBody = document.createElement('div');
     var heading = document.createElement('h2');
-    var forecast = document.createElement('div');
+    var temperatureEl = document.createElement('p');
+    var windEl = document.createElement('p');
+    var humidityEl = document.createElement('p');
+    temperatureEl.setAttribute('class','card-content');
+    temperatureEl.textContent = `Temp: ${temperature} F`;    
+    windEl.setAttribute('class', 'card-content');
+    windEl.textContent = `Wind: ${wind} mph`;
+    humidityEl.setAttribute('class', 'card-content');
+    humidityEl.textContent = `Humidity: ${humidity}%`;
+    
     // var weatherIcon = document.createElement('img');
     // var iconurl = 'https://openweathermap.org/img/w/${weather.weather[0].icon}.png'
     // weatherIcon.setAttribute('src', iconurl);
@@ -137,16 +142,27 @@ function displayCurrentWeather(city, date, temperature) {
     cardBody.setAttribute('class', 'card-body');
     card.append(cardBody);
     heading.setAttribute('class', 'h2 card-title');
-    heading.textContent = `${city} (${date})`;
+    heading.textContent = `${city}  (${date})`;
     // heading.append(weatherIcon);
-    cardBody.append(heading, temperature);
+    cardBody.append(heading, temperatureEl, windEl, humidityEl);
     currWeatherEl.innerHTML = '';
     currWeatherEl.append(card);
+
 }
 
-function displayFiveDay() {
+function displayFiveDay () {
+    var cardMini = document.createElement('div');
+    var cardMiniBody = document.createElement('div');
+    cardMini.setAttribute('class', 'card');
+    cardMiniBody.setAttribute('class', 'card-body');
+    cardMini.append(cardMiniBody);
 
-
+    var dayOfWeekEl = document.createElement('h3');
+    dayOfWeekEl.setAttribute('class', 'h3 miniCard-title');
+    dayOfWeekEl.textContent = `${dayOfWeek}`;
+    cardMiniBody.append(dayOfWeekEl);
+    
+  
 }
 
 
