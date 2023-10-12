@@ -2,7 +2,9 @@ var dateDisplayEl = document.querySelector('#currentDay');
 var inputGroupEl = document.querySelector('.input-group')
 var currWeatherEl = document.querySelector('#current-weather');
 var fiveDayEl = document.querySelector('.five-day');
-var searchBtnEl = document.querySelector('.btn');
+var searchBtnEl = document.querySelector('#search-btn');
+var clearEl = document.querySelector('#clear-btn');
+// var cityEl = document.querySelector('#location');
 
 var apiKey = 'b25ce75b259c4e61caf9ce00a1f90876';
 
@@ -25,7 +27,6 @@ function handleSearchFormSubmit(event) {
 function searchCity(query) {
   
     var cityEl = document.querySelector('#location').value;
-    // console.log(cityEl);
 
     fetch("https://geocode.maps.co/search?q=" + cityEl)
     .then (function (response) {
@@ -84,22 +85,18 @@ function searchApi (query) {
 
             displayCurrentWeather(cityName, today, temperature, wind, humidity);
             
-            // 5 day forecast
-            
+            // Gets 5 day forecast
             for (var i = 5; i < data.list.length; i=i+8 ) {
                 
                 var dayOfWeek = data.list[i].dt_txt;
             
-
                 var fiveDayTemp = data.list[i].main.temp_max;
                 fiveDayTemp = Math.floor((fiveDayTemp - 273) * 1.8 + 32);
-                // console.log(fiveDayTemp);
             
                 var fiveDayWind = data.list[i].wind.speed;
-                // console.log(fiveDayWind);
 
                 var fiveDayHumidity = data.list[i].main.humidity;
-             // console.log(fiveDayHumidity);
+            
                 displayFiveDay(dayOfWeek, fiveDayTemp, fiveDayWind, fiveDayHumidity);
         }
             
@@ -121,8 +118,8 @@ function searchApi (query) {
 
 }
 
+// Displays current city and weather
 function displayCurrentWeather(city, date, temperature, wind, humidity) {
-
     var card = document.createElement('div');
     var cardBody = document.createElement('div');
     var heading = document.createElement('h2');
@@ -148,6 +145,7 @@ function displayCurrentWeather(city, date, temperature, wind, humidity) {
 
 }
 
+// Displays five day forecast
 function displayFiveDay (dayOfWeek, fiveDayTemp, fiveDayWind, fiveDayHumidity) {
     var cardMini = document.createElement('div');
     var cardMiniBody = document.createElement('div');
@@ -178,6 +176,12 @@ function displayFiveDay (dayOfWeek, fiveDayTemp, fiveDayWind, fiveDayHumidity) {
     cardMiniBody.append(dayOfWeekEl, fiveDayTempEl, fiveDayWindEl, fiveDayHumidityEl);
 }
 
+// Clears previous entry
+clearEl.addEventListener('click', function() {
+    localStorage.removeItem('city');
+    document.location.reload();
+
+})
 
 
 
