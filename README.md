@@ -8,11 +8,11 @@ This application allows the user to enter a city of their choice and retrieve th
 
 
 ## Screenshots
-
+![Alt text](<Weather-Dashboard (1).png>)
 
 
 ## Technology Used
-Javascript, HTML, CSS, Bootstrap, Google Fonts, dayjs, JQuery, api.openweathermap.org
+Javascript, HTML, CSS, Bootstrap, Google Fonts, dayjs, api.openweathermap.org
 
 
-## Contributors
+
